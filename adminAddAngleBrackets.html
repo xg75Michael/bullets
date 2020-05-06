@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add new tags for News</title>
+</head>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-top: 2vw;
+    }
+    
+    #addDivTagButton {
+        background-color: transparent;
+        border: 1px solid #000;
+        line-height: 2vw;
+        font-size: 1vw;
+        margin: 0.3vw;
+        border-radius: 0.5vw;
+    }
+    
+    #addDivTagButton:hover {
+        background-color: #000;
+        color: #fff;
+        transition: color, background-color 1s;
+    }
+</style>
+
+<body>
+    <textarea name="inputNewsText" id="inputText" cols="100" rows="50" placeholder="Input your admin-specs text, and there has to be 3 empty lines between each paragraph."></textarea>
+    <!-- get another textarea for keywords? -->
+    <p>
+        <!-- add more personalities here later -->
+        <button id="addDivTagButton">Angle Brackets=></button>
+    </p>
+    <textarea name="outputNewsText" id="outputText" cols="100" rows="50" placeholder="The result output texts."></textarea>
+</body>
+<script>
+    // init
+    let inputText = document.getElementById('inputText');
+    let outputText = document.getElementById('outputText');
+    let divButton = document.getElementById('addDivTagButton');
+    let pButton = document.getElementById('addPTagsButton');
+    let myTest = document.getElementById('addDivTagButton');
+    // pop last element if it is wrong
+    function popLastLetter(str) {
+        let tempStr;
+        let tempLength = str.length;
+        let lastLetter = str[tempLength - 1];
+        if (/[<>\n"]/.test(lastLetter)) {
+            tempStr = str.slice(0, tempLength - 1);
+            return popLastLetter(tempStr);
+        } else {
+            return str;
+        }
+    }
+    // shift first element if it is wrong
+    function shiftFirstLetter(str) {
+        if (/[<>br\n"]/.test(str[0])) {
+            return shiftFirstLetter(str.slice(1));
+        } else {
+            return str;
+        }
+    }
+    myTest.onclick = function() {
+        let editText1 = inputText.value.slice(0).replace(/\n/g, '<>\n')
+            .replace(/<>\n<>/g, '<>\n<br>')
+            .replace(/<>\n<br>\n<>\n<br>\n/g, '\n\n\n\n\n\n\n\n\n')
+            .replace(/\n"/g, '\n')
+            .replace(/"\n/g, '\n');
+        editText1 = shiftFirstLetter(popLastLetter(editText1));
+        outputText.value = editText1;
+    }
+</script>
+
+</html>
