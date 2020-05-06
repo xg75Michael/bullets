@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Concentrix-tools-url</title>
+    <link rel="icon" href="https://github.githubassets.com/favicons/favicon.svg">
+    <style>
+        textarea {
+            border: 2px solid #5E6C77;
+            font-size: 1.2vw;
+            padding: .25em .5em .3125em;
+            color: #5E6C77;
+            border-radius: .25em;
+            background: transparent;
+            -webkit-transition: all .100s;
+            transition: all .100s;
+        }
+
+        textarea:focus {
+            outline: none;
+            color: #A2ACB3;
+            border-color: #A2ACB3;
+        }
+
+        textarea.keyup {
+            color: white;
+            border-color: white;
+            text-shadow: 0 0 .125em white;
+            box-shadow: 0 0 .25em white, inset 0 0 .25em white;
+        }
+
+        body {
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: center;
+            -webkit-align-items: center;
+            -ms-flex-align: center;
+            align-items: center;
+            -webkit-box-pack: center;
+            -webkit-justify-content: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+        }
+
+        textarea {
+            font-family: "Arial Rounded MT Bold", "Helvetica Rounded", Arial, sans-serif;
+        }
+
+        ::-webkit-textarea-placeholder {
+            color: #5E6C77;
+            text-shadow: 0 0 .125em transparent;
+            -webkit-transition: all .25s;
+            transition: all .25s;
+        }
+
+        textarea:focus::-webkit-textarea-placeholder {
+            opacity: .5;
+        }
+
+        ::-moz-placeholder {
+            color: #5E6C77;
+            text-shadow: 0 0 .125em transparent;
+            -webkit-transition: all .25s;
+            transition: all .25s;
+        }
+
+        textarea:focus::-moz-placeholder {
+            opacity: .5;
+        }
+
+        :-ms-textarea-placeholder {
+            color: #5E6C77;
+            text-shadow: 0 0 .125em transparent;
+            -webkit-transition: all .25s;
+            transition: all .25s;
+        }
+
+        textarea:focus:-ms-textarea-placeholder {
+            opacity: .5;
+        }
+
+        html,
+        body {
+            height: 100%;
+            overflow: hidden;
+        }
+
+        html {
+            background: #282E33;
+        }
+
+        #area-right {
+            transform: translateX(20px);
+        }
+
+        .btn-dark {
+            color: #fff;
+            background-color: #343a40;
+            border-color: #343a40;
+        }
+
+        p {
+            position: absolute;
+            right: 2vw;
+            top: 2vw;
+        }
+
+        button {
+            width: 6vw;
+            height: 3vw;
+            position: relative;
+            margin-top: 5px;
+            text-align: center;
+            font-size: 1vw;
+            letter-spacing: 0.2vw;
+        }
+
+        span {
+            font-size: 12px;
+            color: #fff;
+            display: inline-block;
+            position: absolute;
+            bottom: 2vw;
+            margin: 0 auto;
+        }
+
+        textarea {
+            width: 46%;
+            height: 80%;
+            resize: none;
+        }
+
+        div {
+            width: 85%;
+            height: 90%;
+        }
+
+        textarea::-webkit-input-placeholder {
+            /* WebKit browsers */
+            /* placeholder颜色  */
+            color: #5E6C77;
+            /* placeholder字号  */
+            font-size: 1vw;
+        }
+
+        textarea:-moz-placeholder {
+            /* Mozilla Firefox 4 to 18 */
+            color: #5E6C77;
+            font-size: 1vw;
+        }
+
+        textarea::-moz-placeholder {
+            /* Mozilla Firefox 19+ */
+            color: #5E6C77;
+            font-size: 1vw;
+        }
+
+        textarea::-ms-input-placeholder {
+            /* Internet Explorer 10+ */
+            color: #5E6C77;
+            font-size: 1vw;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <textarea name="" id="area-left" placeholder="Attentions：
+
+    1. Please input something like this :   /en/phones/p40&#10;
+    2. If you don't need to splice, please input directly from the right box, click open&#10;
+    3. The link address can ignore the HTTP and automatically add ''http://''
+        
+        "></textarea>
+        <textarea name="" id="area-right"></textarea>
+    </div>
+    <p>
+        <button type="button" id="btn1" class="btn btn-dark">备 份</button><br>
+        <button type="button" id="btn2" class="btn btn-dark">编 辑</button><br>
+        <button type="button" id="btn3" class="btn btn-dark">属 性</button><br>
+        <button type="button" id="btn4" class="btn btn-dark">预 览</button><br>
+        <button type="button" id="btn5" class="btn btn-dark">现 网</button><br>
+        <button type="button" id="btn6" class="btn btn-dark">打 开</button><br>
+        <button type="button" id="btn7" class="btn btn-dark">关 闭</button><br>
+        <button type="button" id="btn8" class="btn btn-dark">CDN-P-FN</button><br>
+        <button type="button" id="btn9" class="btn btn-dark">CDN-P-CN</button><br>
+
+    </p>
+    <!-- <span id="article" style="font-size: 1vw;letter-spacing: .2vw;">
+        手机：音量过大 我：你懂个der !
+    </span> -->
+
+    <!-- <script type="text/javascript" src="js/index.js"></script> -->
+    <script>
+        // 去除字符串两边的空格
+        String.prototype.trim = function() {　　
+            return this.replace(/(^\s*)|(\s*$)/g, "");　　
+        }
+        // 获取dom
+        var larea = document.getElementById("area-left");
+        var rarea = document.getElementById("area-right");
+        var btn1 = document.getElementById("btn1");
+        var btn2 = document.getElementById("btn2");
+        var btn3 = document.getElementById("btn3");
+        var btn4 = document.getElementById("btn4");
+        var article = document.getElementById("article");
+
+        // 点击事件
+
+        // 备份
+        btn1.onclick = function () {
+            let arr = larea.value.split(/\n/);
+            rarea.value = "";
+            if (larea.value != "") {
+                for (var i = 0; i < arr.length; i++) {
+                    if(arr[i] != ""){
+                        rarea.value += "https://mktcloud.c.huawei.com/sites.html/content/huawei-cbg-site" + arr[i].trim() + "\n";
+                    }
+                   
+                }
+            }
+        }
+
+        // 编辑
+        btn2.onclick = function () {
+            let arr = larea.value.split(/\n/);
+            rarea.value = "";
+            if (larea.value != "") {
+                
+                for (var i = 0; i < arr.length; i++) {
+                    if(arr[i] != ""){
+                    rarea.value += "https://mktcloud.c.huawei.com/editor.html/content/huawei-cbg-site" + arr[i].trim() + ".html" + "\n";
+                }
+            }
+            }
+        }
+        // 属性
+        btn3.onclick = function () {
+            let arr = larea.value.split(/\n/);
+            rarea.value = "";
+            if (larea.value != "") {
+                for (var i = 0; i < arr.length; i++) {
+                    if(arr[i] != ""){
+                    rarea.value += "https://mktcloud.c.huawei.com/mnt/overlay/wcm/core/content/sites/properties.html?item=/content/huawei-cbg-site" + arr[i].trim() + "\n";
+                    }
+                }
+            }
+        }
+        // 预览
+        btn4.onclick = function () {
+            let arr = larea.value.split(/\n/);
+            rarea.value = "";
+            if (larea.value != "") {
+                for (var i = 0; i < arr.length; i++) {
+                    if(arr[i] != ""){
+                    rarea.value += "https://mktcloud.c.huawei.com/content/huawei-cbg-site" + arr[i].trim() + ".html?wcmmode=disabled" + "\n";
+                }
+                }
+            }
+        }
+        // 现网
+        btn5.onclick = function () {
+            let arr = larea.value.split(/\n/);
+            rarea.value = "";
+            if (larea.value != "") {
+                for (var i = 0; i < arr.length; i++) {
+                    if(arr[i] != ""){
+                    rarea.value += "https://consumer.huawei.com" + arr[i].trim() + "\n";}
+                }
+            }
+        }
+        var closeWin = [];
+        // 打开
+        btn6.onclick = function () {
+            let arr = rarea.value.split(/\n/);
+            for (var i = 0; i < arr.length; i++) {
+                if (arr[i].trim() != "") {
+                    closeWin.push(window.open(/^http/.test(arr[i].trim()) ? arr[i].trim() : "http://".concat(arr[i].trim()), '_blank'));
+                }
+
+            }
+        }
+        // 关闭
+        btn7.onclick = function () {
+            for (var i = 0; i < closeWin.length; i++) {
+                closeWin[i].close();
+            }
+        }
+        // 国外图片CDN
+        btn8.onclick = function () {
+            let arr = larea.value.split(/\n/);
+            rarea.value = "";
+            if (larea.value != "") {
+                for (var i = 0; i < arr.length; i++) {
+                    if(arr[i] != ""){
+                    rarea.value += "https://consumer-img.huawei.com" + arr[i].trim() + "\n" + "http://consumer-img.huawei.com" + arr[i].trim() + "\n";
+                    }
+                }
+            }
+        }
+        // 国内图片CSN
+        btn9.onclick = function () {
+            let arr = larea.value.split(/\n/);
+            rarea.value = "";
+            if (larea.value != "") {
+                for (var i = 0; i < arr.length; i++) {
+                    if(arr[i] != ""){
+                    rarea.value += "https://consumer-img.huawei.com" + arr[i].trim() + "\n" + "http://consumer-img.huawei.com" + arr[i].trim() + "\n" + "https://consumer.huawei.com" + arr[i].trim() + "\n" + "http://consumer.huawei.com" + arr[i].trim() + "\n";
+                
+                }}
+            }
+        }
+
+    </script>
+</body>
+
+</html>
