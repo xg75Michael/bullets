@@ -14,12 +14,11 @@ Private Sub RegExp_Replace()
         If Matches.Count >= 1 Then
             Set Match = Matches(0)
             Cell.Value = RegExp.Replace(Cell.Value, "<>" + vbLf + "<br>" + vbLf)
-            Cell.Value = RegExp.Replace(Cell.Value, "<>" + vbLf + "<br>" + vbLf)
         End If
     Next
 
     Set RegExp2 = CreateObject("vbscript.regexp")
-    RegExp2.Pattern = "[^>]\n"
+    RegExp2.Pattern = "([^>])\n"
     RegExp2.Global = True
 
 
@@ -27,8 +26,7 @@ Private Sub RegExp_Replace()
         Set Matches2 = RegExp2.Execute(Cell.Value)
         If Matches2.Count >= 1 Then
             Set Match2 = Matches2(0)
-            Cell.Value = RegExp2.Replace(Cell.Value, "<>" + vbLf)
-            Cell.Value = RegExp2.Replace(Cell.Value, "<>" + vbLf)
+            Cell.Value = RegExp2.Replace(Cell.Value, "$1<>" + vbLf)
         End If
     Next
 
