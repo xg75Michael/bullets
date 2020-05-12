@@ -1,0 +1,35 @@
+Private Sub RegExp_Replace()
+
+    Dim RegExp As Object
+    Dim SearchRange As Range, Cell As Range
+
+    Set RegExp = CreateObject("vbscript.regexp")
+    RegExp.Pattern = "\n{2}"
+    RegExp.Global = True
+
+    Set SearchRange = ActiveSheet.Range("E1:E30")
+
+    For Each Cell In SearchRange
+        Set Matches = RegExp.Execute(Cell.Value)
+        If Matches.Count >= 1 Then
+            Set Match = Matches(0)
+            Cell.Value = RegExp.Replace(Cell.Value, "<>" + vbLf + "<br>" + vbLf)
+            Cell.Value = RegExp.Replace(Cell.Value, "<>" + vbLf + "<br>" + vbLf)
+        End If
+    Next
+
+    Set RegExp2 = CreateObject("vbscript.regexp")
+    RegExp2.Pattern = "[^>]\n"
+    RegExp2.Global = True
+
+
+    For Each Cell In SearchRange
+        Set Matches2 = RegExp2.Execute(Cell.Value)
+        If Matches2.Count >= 1 Then
+            Set Match2 = Matches2(0)
+            Cell.Value = RegExp2.Replace(Cell.Value, "<>" + vbLf)
+            Cell.Value = RegExp2.Replace(Cell.Value, "<>" + vbLf)
+        End If
+    Next
+
+End Sub
