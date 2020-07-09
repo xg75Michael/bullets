@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Add P Tag</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        font-size: 12px;
+    }
+    
+    div {
+        width: 100vw;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .buttonsContainer {
+        margin-top: 1vh;
+        margin-bottom: 1vh;
+    }
+    
+    .buttonsContainer button {
+        margin: 0 1vw;
+        height: 4vh;
+        border: 1px solid #34495e;
+        border-radius: 20px;
+        background-color: transparent;
+        padding: 0 1vw;
+        font-size: 1.4rem;
+        color: #000;
+    }
+    
+    .buttonsContainer button:hover {
+        color: #fff;
+        background-color: #34495e;
+    }
+</style>
+
+<body>
+    <div class="inputContainer">
+        <textarea cols="160" rows="50" id="inputNewsText" name="inputText" placeholder="Please input your News texts without title, location and date."></textarea>
+    </div>
+
+
+    <div class="buttonsContainer">
+        <button id="AddPTags">P Tag Transform</button>
+        <button id="test">TEST</button>
+    </div>
+
+
+    <div class="outputContainer">
+        <textarea cols="160" rows="50" id="outputNewsText" name="outputText" placeholder="Here will be the result text."></textarea>
+    </div>
+
+</body>
+<script>
+    // init
+    let inputTextEle = document.getElementById('inputNewsText');
+    let outputTextEle = document.getElementById('outputNewsText');
+    let AddPTagButton = document.getElementById('AddPTags');
+    let testButton = document.getElementById('test');
+    let findPoint = /\./g;
+    let findColon = /\:/g;
+    let findURL = /http[s]/g;
+    let findDash = /-/g;
+    let resultArr = [];
+    let nSecondWords = ['']
+
+    // set and attach event to the AddTags button
+    testButton.onclick = function() {
+        // get all the input text and store it into a variable
+        let inputText = inputTextEle.value;
+        // copy value and take empty value out and take \s+ out(image)
+        let tempArr = inputText.slice(0).split(/\n/).filter(item => item);
+        // modified each item in the value and push it into resultArr
+        tempArr.forEach(function(item, index) {
+            if (/^\s+?$/.test(item)) {
+                // detect if it needs to add img tag
+                resultArr.push('<!--\nCheck if here needs to add a image. \n<img src="" title="" alt="">\n -->\n')
+            } else if (/http[s]:/g.test(item)) {
+                // detect if it needs to add a tag
+                if (/iframe/g.test(item)) {
+                    // if it is a iframe
+                    item = item.replace(/(width=.+?\s)(height=.+?\s)/g, 'width="100%" ');
+                    resultArr.push('\n' + item + '\n');
+                } else if (/(consumer)|(shop.+[(cz|pl)])/g.test(item)) {
+                    // without target
+                    item = item.replace(/(http[s]:\/\/[^\s]+)/g, function($1) {
+                        let tempALink = $1.toLowerCase();
+                        return '<a href="' + tempALink + '">' + $1 + '</a>';
+                    });
+                    resultArr.push('<!-- Check if the a tag href is right -->');
+                    resultArr.push('<p>\n' + item + '\n' + '</p>\n');
+                } else {
+                    // does have target
+                    item = item.replace(/(http[s]:\/\/[^\s]+)/g, function($1) {
+                        let tempALink = $1.toLowerCase();
+                        return '<a href="' + tempALink + '" target="_blank">' + $1 + '</a>';
+                    });
+                    resultArr.push('<!-- Check if the a tag href is right -->');
+                    resultArr.push('<p>\n' + item + '\n' + '</p>\n');
+                }
+
+            } else if (item.length < 100 && !findPoint.test(item) && !findURL.test(item) && !findDash.test(item)) {
+                // if it is second title
+                resultArr.push('<p class="second-title">\n' + item + '\n' + '</p>\n');
+            } else {
+                // if it is not a second title
+                resultArr.push('<p>\n' + item + '\n' + '</p>\n');
+            }
+        });
+        // join items into a String and wraped a outer div tag and add to outputTextEle
+        outputTextEle.value = '<div id="news_contain">\n' + resultArr.join('') + '</div>';
+        // console.log(tempArr);
+        // console.log(tempArrPTag);
+        // console.log(resultArr);
+    };
+</script>
+
+</html>
